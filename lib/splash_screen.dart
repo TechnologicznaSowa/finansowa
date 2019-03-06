@@ -57,17 +57,22 @@ class SplashScreen extends StatelessWidget {
       decoration: BoxDecoration(color: Colors.blue),
     );
 
-    ListTile l1 = ListTile(
+    ListTile savings = ListTile(
       leading: Icon(Icons.monetization_on),
       title: Text('Oszczędności'),
+    );
+
+    ListTile kalkulatorLokat = ListTile(
+      title: Text('Kalkulator lokaty'),
       onTap: () {
         Navigator.pop(context);
+        _push(context);
       },
     );
 
     Text lol = Text('hehe');
 
-    var children = [drawerHeader, l1, lol];
+    var children = [drawerHeader, savings, kalkulatorLokat];
     ListView listView = ListView(padding: EdgeInsets.zero, children: children);
 
     return Drawer(
