@@ -6,20 +6,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  
-  int state = 0;
-  
+  _PageRoot pageRoot = _PageRoot.HomeScreen;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
-      drawer: _buildDrawer(context),
+      appBar: _buildAppBar(),
+      drawer: _buildDrawer(),
       body: _buildBody(),
       backgroundColor: Colors.white,
     );
   }
 
-  _buildAppBar(BuildContext context) {
+  _buildAppBar() {
     Builder leading = Builder(
         builder: (context) => IconButton(
               icon: new Icon(Icons.list),
@@ -60,39 +59,58 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _buildDrawer(BuildContext context) {
+  _buildDrawer() {
     DrawerHeader drawerHeader = DrawerHeader(
+      margin: EdgeInsets.all(0),
       child: Text('Drawer Header'),
       decoration: BoxDecoration(color: Colors.blue),
     );
 
     ListTile savings = ListTile(
       leading: Icon(Icons.monetization_on),
-      title: Text('Oszczędności'),
+      title: Text(
+        'Oszczędności',
+      ),
     );
-
-    ListTile kalkulatorLokat = ListTile(
-      title: Text('Kalkulator lokaty'),
-      onTap: () {
-        Navigator.pop(context);
-        this.setState(() {
-          state = 0;
-        });
-      },
+    Container savingsSection = Container(
+      child: DecoratedBox(
+          decoration: BoxDecoration(color: Colors.amber), child: savings),
     );
+    ListTile investmentCalculator =
+        _buildSectionItem('Kalkulator lokaty', _PageRoot.InvestmentCalculator);
+    ListTile lifeFromInterest =
+        _buildSectionItem('Życie z odsetek', _PageRoot.LifeFromInterest);
+    ListTile returnFromInvestment = _buildSectionItem(
+        'Stopa zwrotu z inwestycji', _PageRoot.LifeFromInterest);
+    ListTile investFund = _buildSectionItem(
+        'Fundusz inwestycyjny', _PageRoot.LifeFromInterest);
+    ListTile delayingInvestment = _buildSectionItem(
+        'Koszt zwlekania z inwestycją', _PageRoot.LifeFromInterest);
 
-    ListTile kalkulatorLokat2 = ListTile(
-      title: Text('cos innego'),
-      onTap: () {
-        Navigator.pop(context);
-        this.setState(() {
-          state = 1;
-        });
-      },
+    ListTile credit = ListTile(
+      leading: Icon(Icons.account_balance),
+      title: Text(
+        'Kredyt',
+      ),
     );
+    Container creditSection = Container(
+      child: DecoratedBox(
+          decoration: BoxDecoration(color: Colors.redAccent), child: credit),
+    );
+    ListTile creditCalculator =
+    _buildSectionItem('Kalkulator kredytu', _PageRoot.InvestmentCalculator);
 
-
-    var children = [drawerHeader, savings, kalkulatorLokat, kalkulatorLokat2];
+    List<Widget> children = [
+      drawerHeader,
+      savingsSection,
+      investmentCalculator,
+      lifeFromInterest,
+      returnFromInvestment,
+      investFund,
+      delayingInvestment,
+      creditSection,
+      creditCalculator
+    ];
     ListView listView = ListView(padding: EdgeInsets.zero, children: children);
 
     return Drawer(
@@ -100,15 +118,31 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  _buildSectionItem(String text, _PageRoot pageRoot) {
+    return ListTile(
+      title: Text(text),
+      onTap: () {
+        Navigator.pop(context);
+        this.setState(() {
+          this.pageRoot = pageRoot;
+        });
+      },
+    );
+  }
+
   _buildBody() {
-    switch(state){
-      case 0:
+    switch (pageRoot) {
+      case _PageRoot.HomeScreen:
         return Home('home');
-      case 1:
+      case _PageRoot.InvestmentCalculator:
         return Home('second');
+      default:
+        return Home('404');
     }
   }
 }
+
+enum _PageRoot { HomeScreen, InvestmentCalculator, LifeFromInterest }
 
 class Home extends StatelessWidget {
   final String text;
