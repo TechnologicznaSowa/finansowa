@@ -68,6 +68,7 @@ class FinAppDrawerElement extends StatelessWidget {
       title: Text(_title),
       onTap: () {
         Navigator.pop(context);
+        //TODO kilk powinien wywolać refresh w StatelessHomeScreen => HomePage z paremetrem _pageRoot
       },
     );
   }
