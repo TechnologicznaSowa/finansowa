@@ -1,0 +1,1 @@
+enum FinPageRoute { HomeScreen, InvestmentCalculator, LifeFromInterest }
