@@ -1,3 +1,4 @@
+import 'package:finansowa/src/screens/information_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -157,21 +158,4 @@ class Home extends StatelessWidget {
   }
 }
 
-class SecondRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Second Route"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!X'),
-        ),
-      ),
-    );
-  }
-}
+
